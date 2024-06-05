@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -9,10 +8,10 @@ import { SearchFlightsComponent } from './search-flights/search-flights.componen
 @NgModule({
   declarations: [
     AppComponent,
-    SearchFlightsComponent
+    SearchFlightsComponent,
   ],
   imports: [
-    BrowserModule, HttpClientModule,
+    BrowserModule,
     AppRoutingModule
   ],
   providers: [],
