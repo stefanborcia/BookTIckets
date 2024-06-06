@@ -8,19 +8,15 @@ namespace BookTIckets.Server.Controllers
     [Route("[controller]")]
     public class FlightController : ControllerBase
     {
+        static Random random = new();
         private readonly ILogger<FlightController> _logger;
-
         public FlightController(ILogger<FlightController> logger)
         {
             _logger = logger;
         }
-
-        Random random =new Random();
-
-        [HttpGet]
-        public IEnumerable<FlightRm> Search() => new FlightRm[]
+        static private FlightRm[] flights = new FlightRm[]
         {
-            new (Guid.NewGuid(), "American Airlines", random.Next(100, 5000).ToString(), new TimePlaceRm("Los Angeles", DateTime.Now.AddHours(random.Next(1, 4))), new TimePlaceRm("Istanbul", DateTime.Now.AddHours(random.Next(5, 11))), random.Next(1, 200)),
+             new (Guid.NewGuid(), "American Airlines", random.Next(100, 5000).ToString(), new TimePlaceRm("Los Angeles", DateTime.Now.AddHours(random.Next(1, 4))), new TimePlaceRm("Istanbul", DateTime.Now.AddHours(random.Next(5, 11))), random.Next(1, 200)),
             new (Guid.NewGuid(), "Delta Airlines", random.Next(120, 4500).ToString(), new TimePlaceRm("New York", DateTime.Now.AddHours(random.Next(1, 4))), new TimePlaceRm("Paris", DateTime.Now.AddHours(random.Next(6, 12))), random.Next(15, 80)),
             new (Guid.NewGuid(), "United Airlines", random.Next(150, 4800).ToString(), new TimePlaceRm("Chicago", DateTime.Now.AddHours(random.Next(1, 4))), new TimePlaceRm("London", DateTime.Now.AddHours(random.Next(7, 13))), random.Next(18, 220)),
             new (Guid.NewGuid(), "Southwest Airlines", random.Next(110, 4200).ToString(), new TimePlaceRm("Houston", DateTime.Now.AddHours(random.Next(1, 4))), new TimePlaceRm("Toronto", DateTime.Now.AddHours(random.Next(8, 14))), random.Next(17, 350)),
@@ -30,6 +26,13 @@ namespace BookTIckets.Server.Controllers
             new (Guid.NewGuid(), "Frontier Airlines", random.Next(170, 4300).ToString(), new TimePlaceRm("Denver", DateTime.Now.AddHours(random.Next(1, 4))), new TimePlaceRm("Munich", DateTime.Now.AddHours(random.Next(12, 18))), random.Next(230, 420)),
             new (Guid.NewGuid(), "Hawaiian Airlines", random.Next(180, 4400).ToString(), new TimePlaceRm("Honolulu", DateTime.Now.AddHours(random.Next(1, 4))), new TimePlaceRm("Sydney", DateTime.Now.AddHours(random.Next(13, 19))), random.Next(250, 330)),
             new (Guid.NewGuid(), "Allegiant Air", random.Next(190, 4500).ToString(), new TimePlaceRm("Las Vegas", DateTime.Now.AddHours(random.Next(1, 4))), new TimePlaceRm("Amsterdam", DateTime.Now.AddHours(random.Next(14, 20))), random.Next(260, 450))
+
         };
+
+        [HttpGet]
+        public IEnumerable<FlightRm> Search() => flights;
+
+        [HttpGet("{id}")]
+        public FlightRm Find(Guid id) => flights.SingleOrDefault(flight => flight.Id == id);
     }
 }
