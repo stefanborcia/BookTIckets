@@ -17,6 +17,11 @@ export class SearchFlightsComponent implements OnInit{
   ngOnInit(): void { }
 
   search() {
-    this.flightService.flightGet({}).subscribe(response => this.searchResult = response)
+    this.flightService.flightGet({}).subscribe(response => this.searchResult = response, this.handleError)
+  }
+
+  private handleError(error: any) {
+    console.log(error)
   }
 }
+
